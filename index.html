@@ -1,273 +1,496 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CAPEX: Experience-Adaptive Foundation-Model Demonstrations</title>
+  <meta name="description"
+        content="CAPEX uses a frozen multimodal foundation model as an autonomous robot demonstrator, and learns from execution experience when it must reason again. 4.3x more successful demonstrations at 80% lower cost per demonstration.">
+  <meta name="keywords" content="CAPEX, robot learning, foundation models, VLM, demonstration collection, imitation learning">
+  <meta name="robots" content="noarchive">
 
-  <title>CAPEX</title>
-  <meta
-    name="description"
-    content="CAPEX — project page."
-  />
+  <meta property="og:title" content="CAPEX: Efficiently Distilling Foundation Model Behavior into Deployable Robot Policies">
+  <meta property="og:description" content="Foundation models as autonomous robot demonstrators, made efficient through experience-adaptive reasoning.">
+  <meta property="og:image" content="https://capex-paper.github.io/static/images/fig1_overview.png">
+  <meta property="og:type" content="website">
 
-  <style>
-    :root {
-      --bg: #fafafa;
-      --surface: #ffffff;
-      --text: #18181b;
-      --muted: #71717a;
-      --border: #e4e4e7;
-      --accent: #2563eb;
-      --accent-hover: #1d4ed8;
-    }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Noto+Sans:wght@400;500;700&family=Castoro&display=swap" rel="stylesheet">
 
-    * {
-      box-sizing: border-box;
-    }
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
 
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      font-family:
-        Inter, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        Helvetica, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-    }
-
-    .container {
-      width: min(920px, calc(100% - 40px));
-      margin: 0 auto;
-    }
-
-    /* ---------- Hero ---------- */
-
-    .hero {
-      padding: 110px 0 70px;
-      text-align: center;
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 6px 12px;
-      margin-bottom: 22px;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      background: var(--surface);
-      color: var(--muted);
-      font-size: 0.82rem;
-      font-weight: 500;
-      letter-spacing: 0.02em;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: clamp(3.8rem, 10vw, 7rem);
-      line-height: 0.95;
-      letter-spacing: -0.065em;
-      font-weight: 750;
-    }
-
-    .subtitle {
-      max-width: 680px;
-      margin: 28px auto 0;
-      color: var(--muted);
-      font-size: clamp(1.05rem, 2vw, 1.3rem);
-    }
-
-    .authors {
-      margin-top: 24px;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    .buttons {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 32px;
-    }
-
-    .button {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 10px 17px;
-      border: 1px solid var(--border);
-      border-radius: 9px;
-      background: var(--surface);
-      color: var(--text);
-      font-size: 0.92rem;
-      font-weight: 500;
-      text-decoration: none;
-      transition: all 0.15s ease;
-    }
-
-    .button:hover {
-      border-color: #c7c7cc;
-      transform: translateY(-1px);
-    }
-
-    .button.primary {
-      border-color: var(--text);
-      background: var(--text);
-      color: white;
-    }
-
-    .button.primary:hover {
-      background: #27272a;
-    }
-
-    /* ---------- Placeholder visual ---------- */
-
-    .visual {
-      margin: 15px auto 90px;
-      aspect-ratio: 16 / 8;
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      background:
-        radial-gradient(
-          circle at 30% 30%,
-          rgba(37, 99, 235, 0.12),
-          transparent 30%
-        ),
-        radial-gradient(
-          circle at 70% 70%,
-          rgba(124, 58, 237, 0.1),
-          transparent 30%
-        ),
-        #f4f4f5;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-
-    .visual span {
-      color: #a1a1aa;
-      font-size: 0.9rem;
-      letter-spacing: 0.04em;
-    }
-
-    /* ---------- Sections ---------- */
-
-    section {
-      padding: 15px 0 70px;
-    }
-
-    section h2 {
-      margin: 0 0 18px;
-      font-size: 1.7rem;
-      letter-spacing: -0.035em;
-    }
-
-    section p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 1.03rem;
-    }
-
-    .placeholder {
-      padding: 32px;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      background: var(--surface);
-      color: #a1a1aa;
-      text-align: center;
-      font-size: 0.9rem;
-    }
-
-    /* ---------- Footer ---------- */
-
-    footer {
-      margin-top: 20px;
-      padding: 35px 0 45px;
-      border-top: 1px solid var(--border);
-      color: #a1a1aa;
-      text-align: center;
-      font-size: 0.82rem;
-    }
-
-    @media (max-width: 600px) {
-      .hero {
-        padding-top: 80px;
-      }
-
-      .visual {
-        margin-bottom: 65px;
-        border-radius: 12px;
-      }
-
-      section {
-        padding-bottom: 55px;
-      }
-    }
-  </style>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script defer src="./static/js/index.js"></script>
 </head>
-
 <body>
 
-  <main class="container">
+<!-- ============================ HEADER ============================ -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">
+            <span class="capex">CAPEX</span>: Efficiently Distilling Foundation Model Behavior into
+            Deployable Robot Policies through Experience-Adaptive Reasoning
+          </h1>
 
-    <header class="hero">
-      <div class="badge">Research Project</div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Anonymous Authors</span>
+          </div>
+          <div class="is-size-6 publication-authors venue">
+            <span class="author-block">Paper under double-blind review at ICLR 2027</span>
+          </div>
 
-      <h1>CAPEX</h1>
-
-      <p class="subtitle">
-        Project website coming soon.
-      </p>
-
-      <p class="authors">
-        Anonymous Authors
-      </p>
-
-      <div class="buttons">
-        <a class="button primary" href="#" aria-disabled="true">
-          Paper
-        </a>
-
-        <a class="button" href="#" aria-disabled="true">
-          Code
-        </a>
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="./static/pdf/capex.pdf" target="_blank" rel="noopener"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#videos" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-youtube"></i></span>
+                  <span>Videos</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a class="external-link button is-normal is-rounded is-dark is-disabled-link"
+                   title="Code will be released after the review period" aria-disabled="true">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>Code (coming soon)</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
-    </header>
+    </div>
+  </div>
+</section>
 
-    <div class="visual">
-      <span>PROJECT TEASER</span>
+<!-- ============================ TEASER ============================ -->
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <div class="video-slot is-wide" data-video="teaser.mp4"
+           data-label="Teaser: CAPEX collecting demonstrations across RoboCasa, Franka and bimanual YAM"></div>
+      <h2 class="subtitle has-text-centered teaser-caption">
+        <span class="capex">CAPEX</span> turns a frozen multimodal foundation model into an
+        <b>autonomous robot demonstrator</b>, and learns from its own execution experience
+        <b>when it actually needs to reason again</b>.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ KEY NUMBERS ============================ -->
+<section class="section stats-section">
+  <div class="container is-max-desktop">
+    <div class="columns is-mobile is-multiline is-centered stats">
+      <div class="column is-half-mobile is-one-quarter-tablet stat">
+        <div class="stat-value">4.3&times;</div>
+        <div class="stat-label">more successful demonstrations<br><span class="stat-detail">12.5% &rarr; 53.6% on 360 RoboCasa starts</span></div>
+      </div>
+      <div class="column is-half-mobile is-one-quarter-tablet stat">
+        <div class="stat-value">&minus;80%</div>
+        <div class="stat-label">API cost per demonstration<br><span class="stat-detail">$9.15 &rarr; $1.83</span></div>
+      </div>
+      <div class="column is-half-mobile is-one-quarter-tablet stat">
+        <div class="stat-value">244 &rarr; 37</div>
+        <div class="stat-label">model requests per demonstration<br><span class="stat-detail">39.7 &rarr; 6.6 min of collection</span></div>
+      </div>
+      <div class="column is-half-mobile is-one-quarter-tablet stat">
+        <div class="stat-value">45% &rarr; 95%</div>
+        <div class="stat-label">collection success on the bimanual YAM<br><span class="stat-detail">real robot, 2 tasks</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ ABSTRACT ============================ -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Robot learning has largely relied on human-teleoperated demonstrations to acquire effective
+            learnable behaviors. However, human-operated data collection processes can be unintuitive,
+            difficult to scale, and inherently asynchronous. We explore an alternative: distilling physical
+            behavior from general-purpose multimodal foundation models into deployable robot policies by using
+            the foundation model itself as an autonomous demonstrator. While sufficiently capable models can
+            generate successful zero-shot manipulation trajectories, repeatedly invoking them during physical
+            execution is slow and expensive, limiting their utility as scalable data generators.
+          </p>
+          <p>
+            As a solution, we introduce <span class="capex">CAPEX</span>, an experience-conditioned demonstration
+            collection framework that uses execution experience from previous attempts to adapt how frequently
+            the foundation model must observe, reason, and replan. We evaluate across RoboCasa tasks and on
+            physical Franka and bimanual YAM-arm platforms, measuring task success, model calls, token usage,
+            collection time, and cost. We further train Diffusion Policy and ACT on matched sets of
+            human-teleoperated and foundation-model-generated demonstrations to evaluate the downstream learning
+            value of autonomously collected data.
+          </p>
+          <p>
+            We find that <span class="capex">CAPEX</span> increases the number of successful demonstrations by
+            4.3&times; while reducing the cost per successful demonstration by 80%. Policies trained on
+            <span class="capex">CAPEX</span>-generated data approach the performance of those trained on matched
+            human demonstrations; with longer training, this gap largely closes for policies trained from
+            scratch. These results suggest that foundation models can serve as scalable sources of reusable
+            robot experience.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ METHOD ============================ -->
+<section class="section" id="method">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Method</h2>
+    <div class="content has-text-justified">
+      <p>
+        Querying a frontier model after every small motion couples data collection directly to model latency
+        and inference cost. <span class="capex">CAPEX</span> (<b>C</b>alibrated <b>A</b>daptive <b>P</b>lanning
+        through <b>EX</b>perience Collection) instead lets the model propose temporally extended plans, and
+        uses the robot's own execution outcomes to learn how much of each plan can be trusted before reasoning
+        again. The foundation model stays frozen throughout; all adaptation happens through a small, bounded
+        cross-episode state.
+      </p>
     </div>
 
-    <section>
-      <h2>Abstract</h2>
-      <div class="placeholder">
-        Abstract coming soon.
+    <figure class="paper-figure">
+      <img src="./static/images/fig1_overview.png"
+           alt="CAPEX overview diagram comparing human teleoperation, a base VLM that queries once per waypoint, and CAPEX's calibrated multi-waypoint plans with cross-episode experience.">
+      <figcaption>
+        <b>Overview.</b> (a) Teleoperation yields human demonstrations. (b) The base arm queries a frozen VLM
+        once per waypoint. (c) <span class="capex">CAPEX</span>'s VLM proposes a multi-waypoint plan with stated
+        confidences <i>q<sub>k</sub></i>; the robot executes it until a later waypoint's calibrated probability
+        <i>p&#770;<sub>k</sub></i> falls below &tau; or execution stops, then queries the VLM again. (d) Before
+        each episode, all past attempts are summarized into a cross-episode state: calibrator weights that set
+        how much of a plan runs, and a VLM context holding the robot's own successes and per-phase reliability.
+      </figcaption>
+    </figure>
+
+    <div class="columns is-multiline mechanisms">
+      <div class="column is-one-third">
+        <div class="mechanism">
+          <div class="mechanism-num">1</div>
+          <h3 class="title is-5">Waypoint plans</h3>
+          <p>
+            Each model decision proposes a variable-length plan of up to 24 end-effector waypoints, each with a
+            stated probability of being reached. A <code>locate_pixel</code> tool grounds image pixels to 3-D
+            points.
+          </p>
+        </div>
       </div>
-    </section>
-
-    <section>
-      <h2>Overview</h2>
-      <div class="placeholder">
-        Project overview coming soon.
+      <div class="column is-one-third">
+        <div class="mechanism">
+          <div class="mechanism-num">2</div>
+          <h3 class="title is-5">Calibrated commitment</h3>
+          <p>
+            Every executed waypoint is labeled <i>reached</i> or <i>stalled / contact-stopped</i> by the
+            controller, which needs no human annotation. A logistic calibrator refit before each episode decides
+            how long a prefix of the plan to execute before observing again.
+          </p>
+        </div>
       </div>
-    </section>
-
-    <section>
-      <h2>Results</h2>
-      <div class="placeholder">
-        Results coming soon.
+      <div class="column is-one-third">
+        <div class="mechanism">
+          <div class="mechanism-num">3</div>
+          <h3 class="title is-5">Learning from experience</h3>
+          <p>
+            The VLM context carries a phase-level reliability summary and up to two of the robot's own previous
+            successes, with actions expressed relative to grounded scene points. The context stays bounded no
+            matter how much is collected.
+          </p>
+        </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
-  </main>
+<!-- ============================ VIDEOS ============================ -->
+<section class="section section-alt" id="videos">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Real-World Results</h2>
 
-  <footer>
-    CAPEX · Anonymous Research Project
-  </footer>
+    <!-- YAM -->
+    <h3 class="title is-4">Bimanual YAM: autonomous demonstration collection</h3>
+    <div class="content has-text-justified">
+      <p>
+        On a bimanual I2RT YAM, <span class="capex">CAPEX</span> succeeds on <b>40/42</b> collection attempts
+        versus <b>18/40</b> for the base GPT-6 Astra teacher, using 11.7 instead of 37.6 model calls and
+        $0.65 instead of $1.64 per successful demonstration. Both teachers end every attempt by declaring the
+        task done; the operator rejected 22 of the base teacher's claims and 2 of <span class="capex">CAPEX</span>'s.
+      </p>
+    </div>
+
+    <p class="video-group-title">Bread + corn to plate (same start state)</p>
+    <div class="columns">
+      <div class="column">
+        <div class="video-slot" data-video="yam_bread_corn_capex.mp4" data-label="YAM · bread + corn · CAPEX" data-tag="CAPEX" data-tag-class="is-ours"></div>
+        <p class="video-caption">Places both items without moving the plate.</p>
+      </div>
+      <div class="column">
+        <div class="video-slot" data-video="yam_bread_corn_base.mp4" data-label="YAM · bread + corn · Base" data-tag="Base" data-tag-class="is-base"></div>
+        <p class="video-caption">Pushes the plate off its position, then reports the task done.</p>
+      </div>
+    </div>
+
+    <p class="video-group-title">In-air bowl handover</p>
+    <div class="columns">
+      <div class="column">
+        <div class="video-slot" data-video="yam_bowl_handover_capex.mp4" data-label="YAM · bowl handover · CAPEX" data-tag="CAPEX" data-tag-class="is-ours"></div>
+        <p class="video-caption">Lift by the rim, hand over in the air, set down upright on the right.</p>
+      </div>
+      <div class="column">
+        <div class="video-slot" data-video="yam_bowl_handover_base.mp4" data-label="YAM · bowl handover · Base" data-tag="Base" data-tag-class="is-base"></div>
+        <p class="video-caption">Base teacher: 6/20 successes on this task.</p>
+      </div>
+    </div>
+
+    <!-- Franka -->
+    <h3 class="title is-4 mt-6">Franka Panda: policies trained only on <span class="capex">CAPEX</span> data</h3>
+    <div class="content has-text-justified">
+      <p>
+        We train Diffusion Policy and ACT on 20 <span class="capex">CAPEX</span> demonstrations per task and
+        compare against the same policies trained on 20 matched human-teleoperated demonstrations.
+        <span class="capex">CAPEX</span>-trained policies match or exceed their human-trained counterparts in
+        five of six task&ndash;policy comparisons. The rollouts below are closed-loop Diffusion Policy executions
+        with no foundation model in the loop.
+      </p>
+    </div>
+    <div class="columns">
+      <div class="column">
+        <div class="video-slot" data-video="franka_dp_pick_coke.mp4" data-label="Franka · DP policy · Pick Coke"></div>
+        <p class="video-caption"><b>Pick Coke</b> &ldquo;grab the coke can and lift it up&rdquo;</p>
+      </div>
+      <div class="column">
+        <div class="video-slot" data-video="franka_dp_stack_cups.mp4" data-label="Franka · DP policy · Stack Cups"></div>
+        <p class="video-caption"><b>Stack Cups</b> &ldquo;stack the orange cup onto the green cup&rdquo;</p>
+      </div>
+      <div class="column">
+        <div class="video-slot" data-video="franka_dp_stack_blocks.mp4" data-label="Franka · DP policy · Stack Blocks"></div>
+        <p class="video-caption"><b>Stack Blocks</b> &ldquo;stack the blue block on top of the green block&rdquo;</p>
+      </div>
+    </div>
+
+    <p class="video-group-title">The demonstrations those policies were trained on (collected by <span class="capex">CAPEX</span>)</p>
+    <div class="columns">
+      <div class="column">
+        <div class="video-slot" data-video="franka_collect_pick_coke.mp4" data-label="Franka · CAPEX collection · Pick Coke" data-tag="CAPEX" data-tag-class="is-ours"></div>
+        <p class="video-caption">Pick Coke: 20/35 attempts succeeded</p>
+      </div>
+      <div class="column">
+        <div class="video-slot" data-video="franka_collect_stack_cups.mp4" data-label="Franka · CAPEX collection · Stack Cups" data-tag="CAPEX" data-tag-class="is-ours"></div>
+        <p class="video-caption">Stack Cups: 20/20 attempts succeeded</p>
+      </div>
+      <div class="column">
+        <div class="video-slot" data-video="franka_collect_stack_blocks.mp4" data-label="Franka · CAPEX collection · Stack Blocks" data-tag="CAPEX" data-tag-class="is-ours"></div>
+        <p class="video-caption">Stack Blocks: 20/26 attempts succeeded</p>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table class="table results-table is-narrow">
+        <caption>Physical-robot evaluation. <b>Left:</b> autonomous collection on the bimanual YAM. <b>Right:</b> downstream policy success on the Franka (successes / 10 trials).</caption>
+        <thead>
+          <tr>
+            <th rowspan="2">YAM task</th><th colspan="2">Success</th><th colspan="2">$ / success &darr;</th>
+            <th class="gap" rowspan="2"></th>
+            <th rowspan="2">Franka task</th><th colspan="2">Diffusion Policy</th><th colspan="2">ACT</th>
+          </tr>
+          <tr>
+            <th>Base</th><th>CAPEX</th><th>Base</th><th>CAPEX</th>
+            <th>Ours</th><th>Human</th><th>Ours</th><th>Human</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Bread + Corn</td><td>12/20</td><td class="best">20/21</td><td>1.10</td><td class="best">0.43</td><td class="gap"></td>
+              <td>Pick Coke</td><td>4/10</td><td class="best">5/10</td><td>3/10</td><td>3/10</td></tr>
+          <tr><td>Bowl Handover</td><td>6/20</td><td class="best">20/21</td><td>2.73</td><td class="best">0.88</td><td class="gap"></td>
+              <td>Stack Cups</td><td class="best">2/10</td><td>0/10</td><td class="best">1/10</td><td>0/10</td></tr>
+          <tr><td></td><td></td><td></td><td></td><td></td><td class="gap"></td>
+              <td>Stack Blocks</td><td class="best">2/10</td><td>1/10</td><td>0/10</td><td>0/10</td></tr>
+          <tr class="total"><td>Overall</td><td>18/40</td><td class="best">40/42</td><td>1.64</td><td class="best">0.65</td><td class="gap"></td>
+              <td>Overall</td><td class="best">8/30</td><td>6/30</td><td class="best">4/30</td><td>3/30</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ SIMULATION ============================ -->
+<section class="section" id="simulation">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Simulation: RoboCasa</h2>
+
+    <h3 class="title is-4">Autonomous demonstration collection</h3>
+    <div class="content has-text-justified">
+      <p>
+        We recreate the initial states of the first 20 official human demonstrations for each of 18 atomic
+        RoboCasa tasks (360 paired starts) and compare a base VLM that predicts one waypoint per request with
+        the same VLM under <span class="capex">CAPEX</span>. With GPT-6 Astra, <span class="capex">CAPEX</span>
+        outperforms the base teacher on 14 of 18 tasks, 11 of them significantly.
+      </p>
+    </div>
+    <figure class="paper-figure">
+      <img src="./static/images/fig2_collection.png"
+           alt="Bar chart of collection success: CAPEX outperforms Base across all five RoboCasa task families; 193/360 vs 45/360 overall with GPT-6 Astra.">
+      <figcaption>
+        Collection success on the same 20 starts per task. Left: GPT-6 Astra by task family. Right: all 18
+        tasks for both backbones. Whiskers are 95% Wilson intervals.
+      </figcaption>
+    </figure>
+
+    <div class="table-wrap">
+      <table class="table results-table is-narrow">
+        <caption>Every attempt counts toward cost: totals over all attempts, divided by the number of successful demonstrations. Qwen runs locally (no API price).</caption>
+        <thead>
+          <tr><th>Method</th><th>Success &uarr;</th><th>$ / success &darr;</th><th>Requests / success &darr;</th><th>Minutes / success &darr;</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Astra (Base)</td><td>45/360 &nbsp;12.5%</td><td>9.15</td><td>244</td><td>39.7</td></tr>
+          <tr class="ours"><td>Astra + CAPEX</td><td class="best">193/360 &nbsp;53.6%</td><td class="best">1.83</td><td class="best">37</td><td class="best">6.6</td></tr>
+          <tr><td>Qwen3.8-27B (Base)</td><td>0/360 &nbsp;0.0%</td><td>&mdash;</td><td>&infin;</td><td>&infin;</td></tr>
+          <tr class="ours"><td>Qwen3.8-27B + CAPEX</td><td class="best">5/350 &nbsp;1.4%</td><td>&mdash;</td><td class="best">4,819</td><td class="best">2,332</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="video-group-title">Demonstrations collected by <span class="capex">CAPEX</span> vs. human teleoperation from the same start</p>
+    <div class="columns is-multiline">
+      <div class="column is-half">
+        <div class="video-slot" data-video="robocasa_pnp_counter_to_stove_capex.mp4" data-label="RoboCasa · PnP Counter→Stove · CAPEX" data-tag="CAPEX" data-tag-class="is-ours"></div>
+      </div>
+      <div class="column is-half">
+        <div class="video-slot" data-video="robocasa_pnp_counter_to_stove_human.mp4" data-label="RoboCasa · PnP Counter→Stove · Human" data-tag="Human" data-tag-class="is-human"></div>
+      </div>
+      <p class="column is-full video-caption pair-caption">&ldquo;Pick the mango from the plate and place it in the pan.&rdquo;</p>
+
+      <div class="column is-half">
+        <div class="video-slot" data-video="robocasa_close_toaster_oven_door_capex.mp4" data-label="RoboCasa · Close Toaster Oven Door · CAPEX" data-tag="CAPEX" data-tag-class="is-ours"></div>
+      </div>
+      <div class="column is-half">
+        <div class="video-slot" data-video="robocasa_close_toaster_oven_door_human.mp4" data-label="RoboCasa · Close Toaster Oven Door · Human" data-tag="Human" data-tag-class="is-human"></div>
+      </div>
+      <p class="column is-full video-caption pair-caption">&ldquo;Close the toaster oven door.&rdquo;</p>
+
+      <div class="column is-half">
+        <div class="video-slot" data-video="robocasa_turn_on_microwave_capex.mp4" data-label="RoboCasa · Turn On Microwave · CAPEX" data-tag="CAPEX" data-tag-class="is-ours"></div>
+      </div>
+      <div class="column is-half">
+        <div class="video-slot" data-video="robocasa_turn_on_microwave_human.mp4" data-label="RoboCasa · Turn On Microwave · Human" data-tag="Human" data-tag-class="is-human"></div>
+      </div>
+      <p class="column is-full video-caption pair-caption">&ldquo;Press the start button on the microwave.&rdquo;</p>
+    </div>
+
+    <p class="video-group-title">More <span class="capex">CAPEX</span> demonstrations across task families</p>
+    <div class="columns is-multiline is-mobile">
+      <div class="column is-half-mobile is-one-third-tablet"><div class="video-slot" data-video="robocasa_close_fridge_capex.mp4" data-label="Close Fridge"></div><p class="video-caption">Close Fridge</p></div>
+      <div class="column is-half-mobile is-one-third-tablet"><div class="video-slot" data-video="robocasa_open_cabinet_capex.mp4" data-label="Open Cabinet"></div><p class="video-caption">Open Cabinet</p></div>
+      <div class="column is-half-mobile is-one-third-tablet"><div class="video-slot" data-video="robocasa_pnp_counter_to_cabinet_capex.mp4" data-label="PnP Counter→Cabinet"></div><p class="video-caption">PnP Counter&rarr;Cabinet</p></div>
+      <div class="column is-half-mobile is-one-third-tablet"><div class="video-slot" data-video="robocasa_turn_off_stove_capex.mp4" data-label="Turn Off Stove"></div><p class="video-caption">Turn Off Stove</p></div>
+      <div class="column is-half-mobile is-one-third-tablet"><div class="video-slot" data-video="robocasa_pnp_sink_to_counter_capex.mp4" data-label="PnP Sink→Counter"></div><p class="video-caption">PnP Sink&rarr;Counter</p></div>
+      <div class="column is-half-mobile is-one-third-tablet"><div class="video-slot" data-video="robocasa_navigate_kitchen_capex.mp4" data-label="Navigate Kitchen"></div><p class="video-caption">Navigate Kitchen</p></div>
+    </div>
+
+    <!-- Experience -->
+    <h3 class="title is-4 mt-6">Learning from experience</h3>
+    <div class="content has-text-justified">
+      <p>
+        Clearing memory before each episode isolates the effect of experience. Once the robot has at least one
+        prior success, collection success rises from <b>54.0% to 65.0%</b> on the same starts (p = 0.0016), and
+        successful executions become shorter: <b>&minus;27%</b> model requests and <b>&minus;21%</b> wall-clock
+        time. Raw VLM confidence is poorly calibrated (it never goes below 0.5, while only 70% of waypoints
+        are reached). Calibrating on the robot's own outcomes brings ECE from <b>0.24 to 0.05</b> and AUROC
+        from 0.57 to 0.75, so the robot can safely truncate plans when later waypoints are unreliable.
+      </p>
+    </div>
+    <figure class="paper-figure">
+      <img src="./static/images/fig3_experience.png"
+           alt="(a) Success with and without memory, split by whether memory holds a prior success. (b, c) Reliability diagrams before and after calibration.">
+      <figcaption>
+        (a) Success on the same starts with and without memory. (b, c) Predicted waypoint confidence vs.
+        actual reach rate, over 8,458 executed waypoints, before and after calibration.
+      </figcaption>
+    </figure>
+
+    <!-- Downstream -->
+    <h3 class="title is-4 mt-6">Downstream policy learning</h3>
+    <div class="content has-text-justified">
+      <p>
+        On six tasks we train Diffusion Policy (fine-tuned from RoboCasa365 and from scratch) and ACT on paired
+        <span class="capex">CAPEX</span> and human datasets from identical initial states. At 20k steps,
+        <span class="capex">CAPEX</span>-trained policies approach human-trained performance. With longer
+        training the gap largely closes for policies trained from scratch: at 100k steps, ACT reaches
+        <b>0.50 vs. 0.50</b> and scratch Diffusion Policy <b>0.45 vs. 0.47</b>.
+      </p>
+    </div>
+    <figure class="paper-figure">
+      <img src="./static/images/fig4_training.png"
+           alt="Downstream success vs. training steps for DP fine-tuned, DP from scratch, and ACT, comparing CAPEX and human demonstrations.">
+      <figcaption>
+        Downstream success vs. training budget, averaged over five tasks. The fine-tuned Diffusion Policy starts
+        from a checkpoint pretrained on human data, which favors the human condition.
+      </figcaption>
+    </figure>
+
+    <p class="video-group-title">Simulation policy rollouts (Diffusion Policy trained on <span class="capex">CAPEX</span> data)</p>
+    <div class="columns is-multiline is-mobile">
+      <div class="column is-half-mobile is-one-third-tablet"><div class="video-slot" data-video="robocasa_dp_close_fridge.mp4" data-label="DP policy · Close Fridge"></div><p class="video-caption">Close Fridge</p></div>
+      <div class="column is-half-mobile is-one-third-tablet"><div class="video-slot" data-video="robocasa_dp_close_toaster_oven_door.mp4" data-label="DP policy · Close Toaster Oven"></div><p class="video-caption">Close Toaster Oven Door</p></div>
+      <div class="column is-half-mobile is-one-third-tablet"><div class="video-slot" data-video="robocasa_dp_turn_on_microwave.mp4" data-label="DP policy · Turn On Microwave"></div><p class="video-caption">Turn On Microwave</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ BIBTEX ============================ -->
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@inproceedings{anonymous2027capex,
+  title     = {{CAPEX}: Efficiently Distilling Foundation Model Behavior into Deployable
+               Robot Policies through Experience-Adaptive Reasoning},
+  author    = {Anonymous},
+  booktitle = {Submitted to the International Conference on Learning Representations (ICLR)},
+  year      = {2027},
+  note      = {Under review}
+}</code></pre>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link" href="./static/pdf/capex.pdf" target="_blank" rel="noopener" aria-label="Paper PDF">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content has-text-centered footer-text">
+          <p>
+            Website template adapted from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>,
+            licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
 
 </body>
 </html>
