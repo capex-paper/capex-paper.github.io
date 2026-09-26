@@ -1,16 +1,273 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>CAPEX</title>
+  <meta
+    name="description"
+    content="CAPEX — project page."
+  />
+
+  <style>
+    :root {
+      --bg: #fafafa;
+      --surface: #ffffff;
+      --text: #18181b;
+      --muted: #71717a;
+      --border: #e4e4e7;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family:
+        Inter, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      width: min(920px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    /* ---------- Hero ---------- */
+
+    .hero {
+      padding: 110px 0 70px;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 12px;
+      margin-bottom: 22px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(3.8rem, 10vw, 7rem);
+      line-height: 0.95;
+      letter-spacing: -0.065em;
+      font-weight: 750;
+    }
+
+    .subtitle {
+      max-width: 680px;
+      margin: 28px auto 0;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2vw, 1.3rem);
+    }
+
+    .authors {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 32px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 10px 17px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--surface);
+      color: var(--text);
+      font-size: 0.92rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .button:hover {
+      border-color: #c7c7cc;
+      transform: translateY(-1px);
+    }
+
+    .button.primary {
+      border-color: var(--text);
+      background: var(--text);
+      color: white;
+    }
+
+    .button.primary:hover {
+      background: #27272a;
+    }
+
+    /* ---------- Placeholder visual ---------- */
+
+    .visual {
+      margin: 15px auto 90px;
+      aspect-ratio: 16 / 8;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background:
+        radial-gradient(
+          circle at 30% 30%,
+          rgba(37, 99, 235, 0.12),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 70% 70%,
+          rgba(124, 58, 237, 0.1),
+          transparent 30%
+        ),
+        #f4f4f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .visual span {
+      color: #a1a1aa;
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+    }
+
+    /* ---------- Sections ---------- */
+
+    section {
+      padding: 15px 0 70px;
+    }
+
+    section h2 {
+      margin: 0 0 18px;
+      font-size: 1.7rem;
+      letter-spacing: -0.035em;
+    }
+
+    section p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.03rem;
+    }
+
+    .placeholder {
+      padding: 32px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+      color: #a1a1aa;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    /* ---------- Footer ---------- */
+
+    footer {
+      margin-top: 20px;
+      padding: 35px 0 45px;
+      border-top: 1px solid var(--border);
+      color: #a1a1aa;
+      text-align: center;
+      font-size: 0.82rem;
+    }
+
+    @media (max-width: 600px) {
+      .hero {
+        padding-top: 80px;
+      }
+
+      .visual {
+        margin-bottom: 65px;
+        border-radius: 12px;
+      }
+
+      section {
+        padding-bottom: 55px;
+      }
+    }
+  </style>
 </head>
 
 <body>
-  <h1>CAPEX</h1>
 
-  <p>
-    Project website. Additional materials coming soon.
-  </p>
+  <main class="container">
+
+    <header class="hero">
+      <div class="badge">Research Project</div>
+
+      <h1>CAPEX</h1>
+
+      <p class="subtitle">
+        Project website coming soon.
+      </p>
+
+      <p class="authors">
+        Anonymous Authors
+      </p>
+
+      <div class="buttons">
+        <a class="button primary" href="#" aria-disabled="true">
+          Paper
+        </a>
+
+        <a class="button" href="#" aria-disabled="true">
+          Code
+        </a>
+      </div>
+    </header>
+
+    <div class="visual">
+      <span>PROJECT TEASER</span>
+    </div>
+
+    <section>
+      <h2>Abstract</h2>
+      <div class="placeholder">
+        Abstract coming soon.
+      </div>
+    </section>
+
+    <section>
+      <h2>Overview</h2>
+      <div class="placeholder">
+        Project overview coming soon.
+      </div>
+    </section>
+
+    <section>
+      <h2>Results</h2>
+      <div class="placeholder">
+        Results coming soon.
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    CAPEX · Anonymous Research Project
+  </footer>
+
 </body>
 </html>
