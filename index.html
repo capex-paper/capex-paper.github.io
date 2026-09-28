@@ -233,30 +233,31 @@
         versus <b>18/40</b> for the base GPT-6 Astra teacher, using 11.7 instead of 37.6 model calls and
         $0.65 instead of $1.64 per successful demonstration. Both teachers end every attempt by declaring the
         task done; the operator rejected 22 of the base teacher's claims and 2 of <span class="capex">CAPEX</span>'s.
+        Each clip shows the front camera, with the left and right wrist cameras stacked on its right.
       </p>
     </div>
 
     <p class="video-group-title">Bread + corn to plate (same start state)</p>
     <div class="columns">
       <div class="column">
-        <div class="video-slot" data-video="yam_bread_corn_capex.mp4" data-label="YAM · bread + corn · CAPEX" data-tag="CAPEX" data-tag-class="is-ours"></div>
+        <div class="video-slot" data-video="yam_bread_corn_capex.mp4" data-label="YAM · bread + corn · CAPEX" data-tag="CAPEX" data-tag-class="is-ours" data-speed="3×"></div>
         <p class="video-caption">Places both items without moving the plate.</p>
       </div>
       <div class="column">
-        <div class="video-slot" data-video="yam_bread_corn_base.mp4" data-label="YAM · bread + corn · Base" data-tag="Base" data-tag-class="is-base"></div>
+        <div class="video-slot" data-video="yam_bread_corn_base.mp4" data-label="YAM · bread + corn · Base" data-tag="Base" data-tag-class="is-base" data-speed="3×"></div>
         <p class="video-caption">Pushes the plate off its position, then reports the task done.</p>
       </div>
     </div>
 
-    <p class="video-group-title">In-air bowl handover</p>
+    <p class="video-group-title">In-air bowl handover (same start state)</p>
     <div class="columns">
       <div class="column">
-        <div class="video-slot" data-video="yam_bowl_handover_capex.mp4" data-label="YAM · bowl handover · CAPEX" data-tag="CAPEX" data-tag-class="is-ours"></div>
+        <div class="video-slot" data-video="yam_bowl_handover_capex.mp4" data-label="YAM · bowl handover · CAPEX" data-tag="CAPEX" data-tag-class="is-ours" data-speed="4×"></div>
         <p class="video-caption">Lift by the rim, hand over in the air, set down upright on the right.</p>
       </div>
       <div class="column">
-        <div class="video-slot" data-video="yam_bowl_handover_base.mp4" data-label="YAM · bowl handover · Base" data-tag="Base" data-tag-class="is-base"></div>
-        <p class="video-caption">Base teacher: 6/20 successes on this task.</p>
+        <div class="video-slot" data-video="yam_bowl_handover_base.mp4" data-label="YAM · bowl handover · Base" data-tag="Base" data-tag-class="is-base" data-speed="4×"></div>
+        <p class="video-caption">Same start state; the operator labelled this attempt a failure. Base: 6/20 successes on this task.</p>
       </div>
     </div>
 
@@ -274,31 +275,31 @@
     <div class="columns">
       <div class="column">
         <div class="video-slot" data-video="franka_dp_pick_coke.mp4" data-label="Franka · DP policy · Pick Coke"></div>
-        <p class="video-caption"><b>Pick Coke</b> &ldquo;grab the coke can and lift it up&rdquo;</p>
+        <p class="video-caption"><b>Pick Coke</b> &ldquo;grab the coke can and lift it up&rdquo; &middot; 4/10 trials succeeded</p>
       </div>
       <div class="column">
-        <div class="video-slot" data-video="franka_dp_stack_cups.mp4" data-label="Franka · DP policy · Stack Cups"></div>
-        <p class="video-caption"><b>Stack Cups</b> &ldquo;stack the orange cup onto the green cup&rdquo;</p>
+        <div class="video-slot" data-video="franka_dp_stack_cups.mp4" data-label="Franka · DP policy · Stack Cups" data-speed="3×"></div>
+        <p class="video-caption"><b>Stack Cups</b> &ldquo;stack the orange cup onto the green cup&rdquo; &middot; 2/10 trials succeeded</p>
       </div>
       <div class="column">
-        <div class="video-slot" data-video="franka_dp_stack_blocks.mp4" data-label="Franka · DP policy · Stack Blocks"></div>
-        <p class="video-caption"><b>Stack Blocks</b> &ldquo;stack the blue block on top of the green block&rdquo;</p>
+        <div class="video-slot" data-video="franka_dp_stack_blocks.mp4" data-label="Franka · DP policy · Stack Blocks" data-speed="3×"></div>
+        <p class="video-caption"><b>Stack Blocks</b> &ldquo;stack the blue block on top of the green block&rdquo; &middot; 2/10 trials succeeded</p>
       </div>
     </div>
 
-    <p class="video-group-title">The demonstrations those policies were trained on (collected by <span class="capex">CAPEX</span>)</p>
+    <p class="video-group-title">The demonstrations those policies were trained on (collected by <span class="capex">CAPEX</span>; exterior and wrist cameras)</p>
     <div class="columns">
       <div class="column">
         <div class="video-slot" data-video="franka_collect_pick_coke.mp4" data-label="Franka · CAPEX collection · Pick Coke" data-tag="CAPEX" data-tag-class="is-ours"></div>
         <p class="video-caption">Pick Coke: 20/35 attempts succeeded</p>
       </div>
       <div class="column">
-        <div class="video-slot" data-video="franka_collect_stack_cups.mp4" data-label="Franka · CAPEX collection · Stack Cups" data-tag="CAPEX" data-tag-class="is-ours"></div>
+        <div class="video-slot" data-video="franka_collect_stack_cups.mp4" data-label="Franka · CAPEX collection · Stack Cups" data-tag="CAPEX" data-tag-class="is-ours" data-speed="3×"></div>
         <p class="video-caption">Stack Cups: 20/20 attempts succeeded</p>
       </div>
       <div class="column">
-        <div class="video-slot" data-video="franka_collect_stack_blocks.mp4" data-label="Franka · CAPEX collection · Stack Blocks" data-tag="CAPEX" data-tag-class="is-ours"></div>
-        <p class="video-caption">Stack Blocks: 20/26 attempts succeeded</p>
+        <div class="video-slot" data-video="franka_collect_stack_blocks.mp4" data-label="Franka · CAPEX collection · Stack Blocks" data-tag="CAPEX" data-tag-class="is-ours" data-speed="3×"></div>
+        <p class="video-caption">Stack Blocks: 22/28 attempts succeeded (20 kept)</p>
       </div>
     </div>
 
@@ -370,6 +371,7 @@
     </div>
 
     <p class="video-group-title">Demonstrations collected by <span class="capex">CAPEX</span> vs. human teleoperation from the same start</p>
+    <p class="video-caption">Both sources are rendered by the same RoboCasa pipeline at the same resolution; all simulation clips play in real time.</p>
     <div class="columns is-multiline">
       <div class="column is-half">
         <div class="video-slot" data-video="robocasa_pnp_counter_to_stove_capex.mp4" data-label="RoboCasa · PnP Counter→Stove · CAPEX" data-tag="CAPEX" data-tag-class="is-ours"></div>
@@ -447,11 +449,11 @@
       </figcaption>
     </figure>
 
-    <p class="video-group-title">Simulation policy rollouts (Diffusion Policy trained on <span class="capex">CAPEX</span> data)</p>
+    <p class="video-group-title">Simulation policy rollouts (Diffusion Policy trained from scratch on <span class="capex">CAPEX</span> demonstrations only)</p>
     <div class="columns is-multiline is-mobile">
-      <div class="column is-half-mobile is-one-third-tablet"><div class="video-slot" data-video="robocasa_dp_close_fridge.mp4" data-label="DP policy · Close Fridge"></div><p class="video-caption">Close Fridge</p></div>
-      <div class="column is-half-mobile is-one-third-tablet"><div class="video-slot" data-video="robocasa_dp_close_toaster_oven_door.mp4" data-label="DP policy · Close Toaster Oven"></div><p class="video-caption">Close Toaster Oven Door</p></div>
-      <div class="column is-half-mobile is-one-third-tablet"><div class="video-slot" data-video="robocasa_dp_turn_on_microwave.mp4" data-label="DP policy · Turn On Microwave"></div><p class="video-caption">Turn On Microwave</p></div>
+      <div class="column is-half-mobile is-one-third-tablet"><div class="video-slot" data-video="robocasa_dp_close_fridge.mp4" data-label="DP policy · Close Fridge"></div><p class="video-caption">Close Fridge &middot; 0.79 success at 20k steps</p></div>
+      <div class="column is-half-mobile is-one-third-tablet"><div class="video-slot" data-video="robocasa_dp_close_toaster_oven_door.mp4" data-label="DP policy · Close Toaster Oven"></div><p class="video-caption">Close Toaster Oven Door &middot; 0.51</p></div>
+      <div class="column is-half-mobile is-one-third-tablet"><div class="video-slot" data-video="robocasa_dp_turn_on_microwave.mp4" data-label="DP policy · Turn On Microwave"></div><p class="video-caption">Turn On Microwave &middot; 0.27</p></div>
     </div>
   </div>
 </section>

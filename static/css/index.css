@@ -136,6 +136,18 @@ h3.title.is-4 { margin-top: 2rem; margin-bottom: 0.9rem; }
 .video-tag.is-ours { background: var(--capex-blue); }
 .video-tag.is-base { background: #6b6b6b; }
 .video-tag.is-human { background: var(--human-green); }
+.video-speed {
+  position: absolute;
+  top: 8px; right: 8px;
+  z-index: 2;
+  font-family: 'Google Sans', 'Noto Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.55);
+}
 
 /* Placeholder shown until the video file exists */
 .video-slot.is-missing {

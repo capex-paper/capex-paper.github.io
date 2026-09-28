@@ -27,6 +27,14 @@ document.addEventListener('DOMContentLoaded', function () {
       tag.textContent = slot.dataset.tag;
       slot.appendChild(tag);
     }
+
+    // Playback speed of sped-up clips, e.g. data-speed="3×".
+    if (slot.dataset.speed) {
+      var speed = document.createElement('span');
+      speed.className = 'video-speed';
+      speed.textContent = slot.dataset.speed;
+      slot.appendChild(speed);
+    }
   });
 
   // Only play videos that are on screen.
