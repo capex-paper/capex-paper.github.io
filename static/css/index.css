@@ -149,6 +149,25 @@ h3.title.is-4 { margin-top: 2rem; margin-bottom: 0.9rem; }
   background: rgba(0, 0, 0, 0.55);
 }
 
+/* End label of a synced pair: shown over the held last frame until the other clip finishes */
+.video-end {
+  display: none;
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  font-family: 'Google Sans', 'Noto Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  padding: 4px 16px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.7);
+}
+.video-end.is-failed { background: rgba(176, 38, 30, 0.9); }
+.video-slot.is-ended .video-end { display: block; }
+.video-slot.is-ended video { filter: brightness(0.6); }
+
 /* Placeholder shown until the video file exists */
 .video-slot.is-missing {
   background: repeating-linear-gradient(135deg, #f2f2f4, #f2f2f4 12px, #ebebee 12px, #ebebee 24px);

@@ -233,18 +233,18 @@
         versus <b>18/40</b> for the base GPT-6 Astra teacher, using 11.7 instead of 37.6 model calls and
         $0.65 instead of $1.64 per successful demonstration. Both teachers end every attempt by declaring the
         task done; the operator rejected 22 of the base teacher's claims and 2 of <span class="capex">CAPEX</span>'s.
-        Each clip shows the front camera, with the left and right wrist cameras stacked on its right.
+        Each clip shows the front camera, with the left and right wrist cameras stacked on its right. Each CAPEX/Base pair starts together and replays once both attempts have ended.
       </p>
     </div>
 
     <p class="video-group-title">Bread + corn to plate (same start state)</p>
     <div class="columns">
       <div class="column">
-        <div class="video-slot" data-video="yam_bread_corn_capex.mp4" data-label="YAM · bread + corn · CAPEX" data-tag="CAPEX" data-tag-class="is-ours" data-speed="3×"></div>
+        <div class="video-slot" data-video="yam_bread_corn_capex.mp4" data-label="YAM · bread + corn · CAPEX" data-tag="CAPEX" data-tag-class="is-ours" data-speed="3×" data-sync="yam-bread"></div>
         <p class="video-caption">Places both items without moving the plate.</p>
       </div>
       <div class="column">
-        <div class="video-slot" data-video="yam_bread_corn_base.mp4" data-label="YAM · bread + corn · Base" data-tag="Base" data-tag-class="is-base" data-speed="3×"></div>
+        <div class="video-slot" data-video="yam_bread_corn_base.mp4" data-label="YAM · bread + corn · Base" data-tag="Base" data-tag-class="is-base" data-speed="3×" data-sync="yam-bread" data-end="Failed" data-end-class="is-failed"></div>
         <p class="video-caption">Pushes the plate off its position, then reports the task done.</p>
       </div>
     </div>
@@ -252,11 +252,11 @@
     <p class="video-group-title">In-air bowl handover (same start state)</p>
     <div class="columns">
       <div class="column">
-        <div class="video-slot" data-video="yam_bowl_handover_capex.mp4" data-label="YAM · bowl handover · CAPEX" data-tag="CAPEX" data-tag-class="is-ours" data-speed="4×"></div>
+        <div class="video-slot" data-video="yam_bowl_handover_capex.mp4" data-label="YAM · bowl handover · CAPEX" data-tag="CAPEX" data-tag-class="is-ours" data-speed="4×" data-sync="yam-bowl"></div>
         <p class="video-caption">Lift by the rim, hand over in the air, set down upright on the right.</p>
       </div>
       <div class="column">
-        <div class="video-slot" data-video="yam_bowl_handover_base.mp4" data-label="YAM · bowl handover · Base" data-tag="Base" data-tag-class="is-base" data-speed="4×"></div>
+        <div class="video-slot" data-video="yam_bowl_handover_base.mp4" data-label="YAM · bowl handover · Base" data-tag="Base" data-tag-class="is-base" data-speed="4×" data-sync="yam-bowl" data-end="Failed" data-end-class="is-failed"></div>
         <p class="video-caption">Same start state; the operator labelled this attempt a failure. Base: 6/20 successes on this task.</p>
       </div>
     </div>
@@ -371,29 +371,29 @@
     </div>
 
     <p class="video-group-title">Demonstrations collected by <span class="capex">CAPEX</span> vs. human teleoperation from the same start</p>
-    <p class="video-caption">Both sources are rendered by the same RoboCasa pipeline at the same resolution; all simulation clips play in real time.</p>
+    <p class="video-caption">Both sources are rendered by the same RoboCasa pipeline at the same resolution; all simulation clips play in real time. Each pair starts together, and the clip that finishes first waits on its last frame until the other is done.</p>
     <div class="columns is-multiline">
       <div class="column is-half">
-        <div class="video-slot" data-video="robocasa_pnp_counter_to_stove_capex.mp4" data-label="RoboCasa · PnP Counter→Stove · CAPEX" data-tag="CAPEX" data-tag-class="is-ours"></div>
+        <div class="video-slot" data-video="robocasa_pnp_counter_to_stove_capex.mp4" data-label="RoboCasa · PnP Counter→Stove · CAPEX" data-tag="CAPEX" data-tag-class="is-ours" data-sync="pnp-stove"></div>
       </div>
       <div class="column is-half">
-        <div class="video-slot" data-video="robocasa_pnp_counter_to_stove_human.mp4" data-label="RoboCasa · PnP Counter→Stove · Human" data-tag="Human" data-tag-class="is-human"></div>
+        <div class="video-slot" data-video="robocasa_pnp_counter_to_stove_human.mp4" data-label="RoboCasa · PnP Counter→Stove · Human" data-tag="Human" data-tag-class="is-human" data-sync="pnp-stove"></div>
       </div>
       <p class="column is-full video-caption pair-caption">&ldquo;Pick the mango from the plate and place it in the pan.&rdquo;</p>
 
       <div class="column is-half">
-        <div class="video-slot" data-video="robocasa_close_toaster_oven_door_capex.mp4" data-label="RoboCasa · Close Toaster Oven Door · CAPEX" data-tag="CAPEX" data-tag-class="is-ours"></div>
+        <div class="video-slot" data-video="robocasa_close_toaster_oven_door_capex.mp4" data-label="RoboCasa · Close Toaster Oven Door · CAPEX" data-tag="CAPEX" data-tag-class="is-ours" data-sync="toaster-oven"></div>
       </div>
       <div class="column is-half">
-        <div class="video-slot" data-video="robocasa_close_toaster_oven_door_human.mp4" data-label="RoboCasa · Close Toaster Oven Door · Human" data-tag="Human" data-tag-class="is-human"></div>
+        <div class="video-slot" data-video="robocasa_close_toaster_oven_door_human.mp4" data-label="RoboCasa · Close Toaster Oven Door · Human" data-tag="Human" data-tag-class="is-human" data-sync="toaster-oven"></div>
       </div>
       <p class="column is-full video-caption pair-caption">&ldquo;Close the toaster oven door.&rdquo;</p>
 
       <div class="column is-half">
-        <div class="video-slot" data-video="robocasa_turn_on_microwave_capex.mp4" data-label="RoboCasa · Turn On Microwave · CAPEX" data-tag="CAPEX" data-tag-class="is-ours"></div>
+        <div class="video-slot" data-video="robocasa_turn_on_microwave_capex.mp4" data-label="RoboCasa · Turn On Microwave · CAPEX" data-tag="CAPEX" data-tag-class="is-ours" data-sync="microwave"></div>
       </div>
       <div class="column is-half">
-        <div class="video-slot" data-video="robocasa_turn_on_microwave_human.mp4" data-label="RoboCasa · Turn On Microwave · Human" data-tag="Human" data-tag-class="is-human"></div>
+        <div class="video-slot" data-video="robocasa_turn_on_microwave_human.mp4" data-label="RoboCasa · Turn On Microwave · Human" data-tag="Human" data-tag-class="is-human" data-sync="microwave"></div>
       </div>
       <p class="column is-full video-caption pair-caption">&ldquo;Press the start button on the microwave.&rdquo;</p>
     </div>
